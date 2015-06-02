@@ -5,10 +5,10 @@ import (
 	"net/http"
 	"os"
 
-	log "github.com/Sirupsen/logrus"
-	"github.com/codegangsta/negroni"
-	"github.com/gorilla/context"
-	"github.com/gorilla/sessions"
+	log "github.com/heroku-examples/go-sessions-demo/Godeps/_workspace/src/github.com/Sirupsen/logrus"
+	"github.com/heroku-examples/go-sessions-demo/Godeps/_workspace/src/github.com/codegangsta/negroni"
+	"github.com/heroku-examples/go-sessions-demo/Godeps/_workspace/src/github.com/gorilla/context"
+	"github.com/heroku-examples/go-sessions-demo/Godeps/_workspace/src/github.com/gorilla/sessions"
 )
 
 var sessionStore = sessions.NewCookieStore(
