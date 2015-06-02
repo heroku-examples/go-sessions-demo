@@ -42,7 +42,7 @@ func login(w http.ResponseWriter, r *http.Request) {
 		log.WithField("username", username).Info("session.Save")
 	}
 
-	http.Redirect(w, r, "/", 302)
+	http.Redirect(w, r, "/", 303)
 }
 
 func logout(w http.ResponseWriter, r *http.Request) {
