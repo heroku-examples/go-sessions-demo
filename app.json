@@ -2,5 +2,8 @@
   "name": "Go Sessions Sample",
   "description": "A barebones Go demo for sessions",
   "repository": "https://github.com/heroku-examples/go-sessions-demo",
-  "keywords": ["golang", "gorilla", "negroni"]
+  "keywords": ["golang", "gorilla", "negroni"],
+  "env": {
+    "BUILDPACK_URL": "https://github.com/heroku/heroku-buildpack-go"
+  }
 }
