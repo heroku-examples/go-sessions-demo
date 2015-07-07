@@ -38,7 +38,7 @@ func home(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Add("Content-Type", "text/html")
-	fmt.Fprintf(w, "Hello %s <a href='/logout'>Logout</a>", username)
+	fmt.Fprintf(w, "<html><body>Hello %s<br/><a href='/logout'>Logout</a></body></html>", username)
 }
 
 func login(w http.ResponseWriter, r *http.Request) {
