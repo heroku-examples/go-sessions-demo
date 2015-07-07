@@ -86,7 +86,7 @@ func main() {
 	case lek == 16, lek == 24, lek == 32:
 		ek = []byte(sek)
 	case lek > 32:
-		ek = []byte(sek[0:31])
+		ek = []byte(sek[0:32])
 	}
 
 	sessionStore = sessions.NewCookieStore(
