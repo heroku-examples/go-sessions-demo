@@ -28,7 +28,8 @@ func home(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if username := session.Values["username"]; username == "" {
+	username := session.Values["username"]
+	if u, ok := username.(string); !ok || u == "" {
 		http.Redirect(w, r, "/login.html", 302)
 	} else {
 		w.Header().Add("Content-Type", "text/html")
