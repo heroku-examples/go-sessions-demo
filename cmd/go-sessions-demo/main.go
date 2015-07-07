@@ -31,10 +31,11 @@ func home(w http.ResponseWriter, r *http.Request) {
 	username := session.Values["username"]
 	if u, ok := username.(string); !ok || u == "" {
 		http.Redirect(w, r, "/login.html", 302)
-	} else {
-		w.Header().Add("Content-Type", "text/html")
-		fmt.Fprintf(w, "Hello %s <a href='/logout'>Logout</a>", username)
+		return
 	}
+
+	w.Header().Add("Content-Type", "text/html")
+	fmt.Fprintf(w, "Hello %s <a href='/logout'>Logout</a>", username)
 }
 
 func login(w http.ResponseWriter, r *http.Request) {
