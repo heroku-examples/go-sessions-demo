@@ -4,7 +4,13 @@
   "repository": "https://github.com/heroku-examples/go-sessions-demo",
   "keywords": ["golang", "gorilla", "negroni"],
   "env": {
-    "SESSION_AUTHENTICATION_KEY": "1234",
-    "SESSION_ENCRYPTION_KEY": "00000000000000000000000000000000"
+    "SESSION_AUTHENTICATION_KEY": {
+      "description":"",
+      "generator":"secret"
+    },
+    "SESSION_ENCRYPTION_KEY": {
+      "description":"",
+      "generator":"secret"
+    }
   }
 }
