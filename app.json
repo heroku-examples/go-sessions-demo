@@ -4,7 +4,6 @@
   "repository": "https://github.com/heroku-examples/go-sessions-demo",
   "keywords": ["golang", "gorilla", "negroni"],
   "env": {
-    "BUILDPACK_URL": "https://github.com/heroku/heroku-buildpack-go",
     "SESSION_AUTHENTICATION_KEY": "1234",
     "SESSION_ENCRYPTION_KEY": "00000000000000000000000000000000"
   }
