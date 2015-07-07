@@ -23,6 +23,7 @@ var sessionStore = sessions.NewCookieStore(
 func home(w http.ResponseWriter, r *http.Request) {
 	session, err := sessionStore.Get(r, SessionName)
 	if err != nil {
+		log.WithField("err", err).Info("Error retrieving session.")
 		http.Error(w, "Application Error", http.StatusInternalServerError)
 		return
 	}
