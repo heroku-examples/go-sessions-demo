@@ -19,7 +19,7 @@ const (
 var sessionStore *sessions.CookieStore
 
 func handleSessionError(w http.ResponseWriter, err error) {
-	log.WithField("err", err).Info("Error retrieving session.")
+	log.WithField("err", err).Info("Error handling session.")
 	http.Error(w, "Application Error", http.StatusInternalServerError)
 }
 
@@ -53,8 +53,12 @@ func login(w http.ResponseWriter, r *http.Request) {
 			handleSessionError(w, err)
 			return
 		}
+
 		session.Values["username"] = username
-		session.Save(r, w)
+		if err := session.Save(r, w); err != nil {
+			handleSessionError(w, err)
+			return
+		}
 
 		log.WithField("username", username).Info("session.Save")
 	}
