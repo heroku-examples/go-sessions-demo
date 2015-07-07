@@ -11,12 +11,17 @@ import (
 	"github.com/heroku-examples/go-sessions-demo/Godeps/_workspace/src/github.com/gorilla/sessions"
 )
 
+const (
+	//SessionName to store
+	SessionName = "heroku-go-websockets"
+)
+
 var sessionStore = sessions.NewCookieStore(
 	[]byte(os.Getenv("SESSION_AUTHENTICATION_KEY")),
 	[]byte(os.Getenv("SESSION_ENCRYPTION_KEY")))
 
 func home(w http.ResponseWriter, r *http.Request) {
-	session, err := sessionStore.Get(r, "session-name")
+	session, err := sessionStore.Get(r, SessionName)
 	if err != nil {
 		http.Error(w, "Application Error", http.StatusInternalServerError)
 		return
@@ -35,7 +40,7 @@ func login(w http.ResponseWriter, r *http.Request) {
 	password := r.FormValue("password")
 
 	if username == "foo" && password == "secret" {
-		session, _ := sessionStore.Get(r, "session-name")
+		session, _ := sessionStore.Get(r, SessionName)
 		session.Values["username"] = username
 		session.Save(r, w)
 
