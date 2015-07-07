@@ -20,11 +20,15 @@ var sessionStore = sessions.NewCookieStore(
 	[]byte(os.Getenv("SESSION_AUTHENTICATION_KEY")),
 	[]byte(os.Getenv("SESSION_ENCRYPTION_KEY")))
 
+func handleSessionError(w http.ResponseWriter, err error) {
+	log.WithField("err", err).Info("Error retrieving session.")
+	http.Error(w, "Application Error", http.StatusInternalServerError)
+}
+
 func home(w http.ResponseWriter, r *http.Request) {
 	session, err := sessionStore.Get(r, SessionName)
 	if err != nil {
-		log.WithField("err", err).Info("Error retrieving session.")
-		http.Error(w, "Application Error", http.StatusInternalServerError)
+		handleSessionError(w, err)
 		return
 	}
 
@@ -46,7 +50,11 @@ func login(w http.ResponseWriter, r *http.Request) {
 	log.WithFields(log.Fields{"username": username, "password": password}).Info("Received login request.")
 
 	if username == "foo" && password == "secret" {
-		session, _ := sessionStore.Get(r, SessionName)
+		session, err := sessionStore.Get(r, SessionName)
+		if err != nil {
+			handleSessionError(w, err)
+			return
+		}
 		session.Values["username"] = username
 		session.Save(r, w)
 
