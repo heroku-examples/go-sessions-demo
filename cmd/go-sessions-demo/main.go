@@ -43,6 +43,8 @@ func login(w http.ResponseWriter, r *http.Request) {
 	username := r.FormValue("username")
 	password := r.FormValue("password")
 
+	log.WithFields(log.Fields{"username": username, "password": password}).Debug("Received login request.")
+
 	if username == "foo" && password == "secret" {
 		session, _ := sessionStore.Get(r, SessionName)
 		session.Values["username"] = username
