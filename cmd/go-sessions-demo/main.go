@@ -13,7 +13,7 @@ import (
 
 const (
 	//SessionName to store
-	SessionName = "heroku-go-websockets"
+	SessionName = "go-sessions-demo"
 )
 
 var sessionStore *sessions.CookieStore
@@ -67,7 +67,7 @@ func login(w http.ResponseWriter, r *http.Request) {
 }
 
 func logout(w http.ResponseWriter, r *http.Request) {
-	session, _ := sessionStore.Get(r, "session-name")
+	session, _ := sessionStore.Get(r, SessionName)
 	session.Values["username"] = ""
 	session.Save(r, w)
 
