@@ -16,9 +16,7 @@ const (
 	SessionName = "heroku-go-websockets"
 )
 
-var sessionStore = sessions.NewCookieStore(
-	[]byte(os.Getenv("SESSION_AUTHENTICATION_KEY")),
-	[]byte(os.Getenv("SESSION_ENCRYPTION_KEY")))
+var sessionStore *sessions.CookieStore
 
 func handleSessionError(w http.ResponseWriter, err error) {
 	log.WithField("err", err).Info("Error retrieving session.")
@@ -74,6 +72,18 @@ func logout(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	// To ensure the key is trimmed to 16, 24 or 32 bytes
+	ek := os.Getenv("SESSION_ENCRYPTION_KEY")
+	lek := len(ek)
+	switch {
+	case lek >= 0 && lek < 16, lek > 16 && lek < 24, lek > 24 && lek < 32:
+		log.WithField("SESSION_ENCRYPTION_KEY", ek).Fatal("SESSION_ENCRYPTION_KEY needs to be either 16, 24 or 32 characters long")
+	}
+
+	sessionStore = sessions.NewCookieStore(
+		[]byte(os.Getenv("SESSION_AUTHENTICATION_KEY")),
+		[]byte(ek[0:lek-1]))
+
 	mux := http.NewServeMux()
 	mux.HandleFunc("/login", login)
 	mux.HandleFunc("/logout", logout)
