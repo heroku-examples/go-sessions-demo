@@ -31,6 +31,7 @@ func home(w http.ResponseWriter, r *http.Request) {
 	username := session.Values["username"]
 	if u, ok := username.(string); !ok || u == "" {
 		http.Redirect(w, r, "/login.html", 302)
+		log.WithField("username", u).Info("Username == '', redirecting")
 		return
 	}
 
