@@ -75,23 +75,33 @@ func logout(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/", 302)
 }
 
-func main() {
-	// To ensure the key is trimmed to 16, 24 or 32 bytes
-	var ek []byte
+//ensures the provided sek is
+func determineEncryptionKey() ([]byte, error) {
+	// To ensure the key is 16, 24 or 32 bytes
 	sek := os.Getenv("SESSION_ENCRYPTION_KEY")
 	lek := len(sek)
 	switch {
 	case lek >= 0 && lek < 16, lek > 16 && lek < 24, lek > 24 && lek < 32:
-		log.WithField("SESSION_ENCRYPTION_KEY", sek).Fatal("SESSION_ENCRYPTION_KEY needs to be either 16, 24 or 32 characters long or longer")
+		return nil, fmt.Errorf("SESSION_ENCRYPTION_KEY needs to be either 16, 24 or 32 characters long or longer, was: %d", lek)
 	case lek == 16, lek == 24, lek == 32:
-		ek = []byte(sek)
+		return []byte(sek), nil
 	case lek > 32:
-		ek = []byte(sek[0:32])
+		return []byte(sek[0:32]), nil
+	default:
+		panic("Should not get here.")
 	}
 
+}
+
+func main() {
+	ek, err := determineEncryptionKey()
+	if err != nil {
+		log.Fatal(err)
+	}
 	sessionStore = sessions.NewCookieStore(
 		[]byte(os.Getenv("SESSION_AUTHENTICATION_KEY")),
-		[]byte(ek))
+		ek,
+	)
 
 	mux := http.NewServeMux()
 	mux.HandleFunc("/login", login)
