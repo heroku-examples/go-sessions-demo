@@ -7,6 +7,7 @@ import (
 
 	log "github.com/heroku-examples/go-sessions-demo/Godeps/_workspace/src/github.com/Sirupsen/logrus"
 	"github.com/heroku-examples/go-sessions-demo/Godeps/_workspace/src/github.com/codegangsta/negroni"
+	"github.com/heroku-examples/go-sessions-demo/Godeps/_workspace/src/github.com/gorilla/context"
 	"github.com/heroku-examples/go-sessions-demo/Godeps/_workspace/src/github.com/gorilla/sessions"
 )
 
@@ -119,6 +120,7 @@ func main() {
 	mux.HandleFunc("/", home)
 
 	n := negroni.Classic()
+	n.UseHandler(context.ClearHandler(mux))
 
 	port := os.Getenv("PORT")
 	if port == "" {
