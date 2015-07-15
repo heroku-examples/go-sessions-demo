@@ -119,6 +119,7 @@ func main() {
 	mux.HandleFunc("/logout", logout)
 	mux.HandleFunc("/", home)
 
+	// Classic() serves the contents of public/ and logs requests
 	n := negroni.Classic()
 	n.UseHandler(context.ClearHandler(mux))
 
