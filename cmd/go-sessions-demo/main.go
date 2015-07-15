@@ -30,10 +30,10 @@ func home(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	username := session.Values["username"]
-	if u, ok := username.(string); !ok || u == "" {
+	username, found := session.Values["username"]
+	if !found || username == "" {
 		http.Redirect(w, r, "/login.html", http.StatusSeeOther)
-		log.WithField("username", u).Info("Username == '', redirecting")
+		log.WithField("username", username).Info("Username == '', redirecting")
 		return
 	}
 
