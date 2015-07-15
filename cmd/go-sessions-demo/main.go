@@ -16,7 +16,7 @@ const (
 	SessionName = "go-sessions-demo"
 )
 
-var sessionStore *sessions.CookieStore
+var sessionStore sessions.Store
 
 func handleSessionError(w http.ResponseWriter, err error) {
 	log.WithField("err", err).Info("Error handling session.")
