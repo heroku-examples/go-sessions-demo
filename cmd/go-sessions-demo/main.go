@@ -12,7 +12,7 @@ import (
 )
 
 const (
-	//SessionName to store
+	//SessionName to store session under
 	SessionName = "go-sessions-demo"
 )
 
@@ -47,6 +47,7 @@ func login(w http.ResponseWriter, r *http.Request) {
 
 	log.WithFields(log.Fields{"username": username, "password": password}).Info("Received login request.")
 
+	// These would probably be looked up in a DB or environment normally
 	if username == "foo" && password == "secret" {
 		session, err := sessionStore.Get(r, SessionName)
 		if err != nil {
@@ -60,24 +61,34 @@ func login(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		log.WithField("username", username).Info("session.Save")
+		log.WithField("username", username).Info("completed login & session.Save")
 	}
 
 	http.Redirect(w, r, "/", 303)
 }
 
 func logout(w http.ResponseWriter, r *http.Request) {
-	session, _ := sessionStore.Get(r, SessionName)
-	session.Values["username"] = ""
-	session.Save(r, w)
+	session, err := sessionStore.Get(r, SessionName)
+	if err != nil {
+		handleSessionError(w, err)
+		return
+	}
 
-	log.WithField("username", "").Info("session.Save")
+	session.Values["username"] = ""
+	if err := session.Save(r, w); err != nil {
+		handleSessionError(w, err)
+		return
+	}
+
+	log.WithField("username", "").Info("completed logout & session.Save")
 	http.Redirect(w, r, "/", 302)
 }
 
-//ensures the provided sek is
+// determineEncryptionKey ensures the provided SESSION_ENCRYPTION_KEY is the
+// correct size (16, 24 or 32 bytes). If it's too large it's truncated to the
+// max. If it's otherwise incorrect size wise an error is returned. Otherwise
+// the []byte version is returned.
 func determineEncryptionKey() ([]byte, error) {
-	// To ensure the key is 16, 24 or 32 bytes
 	sek := os.Getenv("SESSION_ENCRYPTION_KEY")
 	lek := len(sek)
 	switch {
