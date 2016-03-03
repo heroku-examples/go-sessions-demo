@@ -1,6 +1,6 @@
 {
 	"ImportPath": "github.com/heroku-examples/go-sessions-demo",
-	"GoVersion": "go1.5",
+	"GoVersion": "go1.6",
 	"Packages": [
 		"./..."
 	],
@@ -26,6 +26,10 @@
 		{
 			"ImportPath": "github.com/gorilla/sessions",
 			"Rev": "715060ac0b7d99d95d1600df329f5da94809023a"
+		},
+		{
+			"ImportPath": "golang.org/x/sys/unix",
+			"Rev": "7a56174f0086b32866ebd746a794417edbc678a1"
 		}
 	]
 }
