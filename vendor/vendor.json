@@ -1,0 +1,38 @@
+{
+	"comment": "",
+	"ignore": "test solaris",
+	"package": [
+		{
+			"checksumSHA1": "1Hloi1uYUVsaVMKEeL7SI7Fs10w=",
+			"comment": "v0.8.7-55-gf7f79f7",
+			"path": "github.com/Sirupsen/logrus",
+			"revision": "08a8a7c27e3d058a8989316a850daad1c10bf4ab",
+			"revisionTime": "2016-08-13T15:40:05Z"
+		},
+		{
+			"checksumSHA1": "g/V4qrXjUGG9B+e3hB+4NAYJ5Gs=",
+			"path": "github.com/gorilla/context",
+			"revision": "08b5f424b9271eedf6f9f0ce86cb9396ed337a42",
+			"revisionTime": "2016-08-17T18:46:32Z"
+		},
+		{
+			"checksumSHA1": "nZoAsxDHOA8fLilA56HKvezLqNU=",
+			"path": "github.com/gorilla/securecookie",
+			"revision": "c13558c2b1c44da35e0eb043053609a5ba3a1f19",
+			"revisionTime": "2016-08-16T22:23:38Z"
+		},
+		{
+			"checksumSHA1": "oSx9IYMY+lnnX3op2Pnh376tIe4=",
+			"path": "github.com/gorilla/sessions",
+			"revision": "1bbba13ba476e132b5a0739b18f1653c3e57d3c1",
+			"revisionTime": "2016-08-16T18:50:42Z"
+		},
+		{
+			"checksumSHA1": "QoVjlQFru1ixgV8vh63T4/JAtLI=",
+			"path": "github.com/pkg/errors",
+			"revision": "a22138067af1c4942683050411a841ade67fe1eb",
+			"revisionTime": "2016-08-08T05:55:40Z"
+		}
+	],
+	"rootPath": "github.com/heroku-examples/go-sessions-demo"
+}
